@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:js='false' b:defaultwidgetversion='2' b:layoutsVersion='3'>
+<head>
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
+    <title><data:blog.pageTitle/></title>
+    <b:skin><![CDATA[]]></b:skin>
+    
+    <!-- External CSS -->
+    <link href='https://cdn.jsdelivr.net/gh/yourusername/basetemplate-builder@main/style.css' rel='stylesheet'/>
+    
+    <!-- External JavaScript -->
+    <script src='https://cdn.jsdelivr.net/gh/yourusername/basetemplate-builder@main/script.js' defer='defer'/>
+    
+    <!-- Blogger Required Markup -->
+    <b:include data='blog' name='all-head-content'/>
+    
+    <!-- SEO Meta Tags -->
+    <meta expr:content='data:blog.metaDescription ? data:blog.metaDescription : data:blog.title' name='description'/>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0' name='viewport'/>
+    
+    <!-- Open Graph Meta Tags -->
+    <meta expr:content='data:blog.title' property='og:site_name'/>
+    <meta expr:content='data:blog.url' property='og:url'/>
+    <meta expr:content='data:blog.title' property='og:title'/>
+    <meta expr:content='data:blog.metaDescription ? data:blog.metaDescription : data:blog.title' property='og:description'/>
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta content='summary_large_image' name='twitter:card'/>
+    <meta expr:content='data:blog.url' name='twitter:url'/>
+    <meta expr:content='data:blog.title' name='twitter:title'/>
+    <meta expr:content='data:blog.metaDescription ? data:blog.metaDescription : data:blog.title' name='twitter:description'/>
+    
+    <!-- Schema.org Markup -->
+    <script type='application/ld+json'>
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "<data:blog.title/>",
+      "url": "<data:blog.homepageUrl/>",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "<data:blog.homepageUrl/>search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class='header'>
+        <div class='container'>
+            <div class='header-content'>
+                <!-- Logo/Title -->
+                <b:section class='header-logo' id='header-logo' maxwidgets='1'>
+                    <b:widget id='Header1' locked='true' title='Blog Title' type='Header' visible='true'>
+                        <b:widget-settings>
+                            <b:widget-setting name='displayUrl'/>
+                            <b:widget-setting name='displayHeight'>0</b:widget-setting>
+                            <b:widget-setting name='sectionWidth'>150</b:widget-setting>
+                            <b:widget-setting name='useImage'>false</b:widget-setting>
+                            <b:widget-setting name='shrinkToFit'>false</b:widget-setting>
+                            <b:widget-setting name='imagePlacement'>REPLACE</b:widget-setting>
+                            <b:widget-setting name='displayWidth'>0</b:widget-setting>
+                        </b:widget-settings>
+                        <b:includable id='main' var='this'>
+                            <div class='header-widget'>
+                                <b:if cond='data:useImage'>
+                                    <a class='logo' expr:href='data:blog.homepageUrl'>
+                                        <img expr:alt='data:title' expr:src='data:image'/>
+                                    </a>
+                                <b:else/>
+                                    <h1 class='blog-title'>
+                                        <a class='logo' expr:href='data:blog.homepageUrl'>
+                                            <data:title/>
+                                        </a>
+                                    </h1>
+                                </b:if>
+                            </div>
+                        </b:includable>
+                    </b:widget>
+                </b:section>
+                
+                <!-- Navigation -->
+                <nav class='nav'>
+                    <ul class='nav-menu' id='navMenu'>
+                        <li><a class='nav-link' href='/'>Beranda</a></li>
+                        <li><a class='nav-link' href='/search/label/Tutorial'>Tutorial</a></li>
+                        <li><a class='nav-link' href='/search/label/Tips'>Tips</a></li>
+                        <li><a class='nav-link' href='/p/tentang.html'>Tentang</a></li>
+                        <li><a class='nav-link' href='/p/kontak.html'>Kontak</a></li>
+                    </ul>
+                    
+                    <!-- Theme Toggle -->
+                    <button class='theme-toggle' onclick='BaseTemplate.toggleTheme()' title='Toggle Theme'>
+                        <span id='themeIcon'>🌙</span>
+                    </button>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class='mobile-menu-toggle' onclick='BaseTemplate.toggleMobileMenu()'>
+                        ☰
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class='main'>
+        <div class='container'>
+            <div class='content-grid'>
+                <!-- Posts -->
+                <div class='content-area'>
+                    <b:section class='main' id='main' showaddelement='true'>
+                        <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' visible='true'>
+                            <b:widget-settings>
+                                <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+                                <b:widget-setting name='style.textcolor'>#000000</b:widget-setting>
+                                <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+                                <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+                                <b:widget-setting name='style.urlcolor'>#000000</b:widget-setting>
+                                <b:widget-setting name='showAuthor'>true</b:widget-setting>
+                                <b:widget-setting name='style.linkcolor'>#000000</b:widget-setting>
+                                <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+                                <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+                                <b:widget-setting name='timestampLabel'/>
+                                <b:widget-setting name='reactionsLabel'/>
+                                <b:widget-setting name='showAuthorProfile'>true</b:widget-setting>
+                                <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+                                <b:widget-setting name='showLabels'>true</b:widget-setting>
+                                <b:widget-setting name='showLocation'>false</b:widget-setting>
+                                <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+                                <b:widget-setting name='postsPerAd'>1</b:widget-setting>
+                                <b:widget-setting name='showBacklinks'>true</b:widget-setting>
+                                <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+                                <b:widget-setting name='showInlineAds'>false</b:widget-setting>
+                                <b:widget-setting name='showReactions'>false</b:widget-setting>
+                            </b:widget-settings>
+                            <b:includable id='main' var='this'>
+                                <!-- Posts -->
+                                <b:if cond='data:posts.length != 0'>
+                                    <div class='blog-posts'>
+                                        <b:loop values='data:posts' var='post'>
+                                            <article class='post-card fade-in'>
+                                                <b:if cond='data:post.title'>
+                                                    <h2 class='post-card-title'>
+                                                        <a expr:href='data:post.url'>
+                                                            <data:post.title/>
+                                                        </a>
+                                                    </h2>
+                                                </b:if>
+                                                
+                                                <div class='post-meta'>
+                                                    <b:if cond='data:post.author'>
+                                                        <span class='post-meta-item'>
+                                                            👤 <data:post.author.name/>
+                                                        </span>
+                                                    </b:if>
+                                                    
+                                                    <b:if cond='data:post.timestamp'>
+                                                        <span class='post-meta-item'>
+                                                            📅 <data:post.timestamp/>
+                                                        </span>
+                                                    </b:if>
+                                                    
+                                                    <b:if cond='data:post.labels'>
+                                                        <span class='post-meta-item'>
+                                                            🏷️ 
+                                                            <b:loop values='data:post.labels' var='label'>
+                                                                <a expr:href='data:label.url'>
+                                                                    <data:label.name/>
+                                                                </a>
+                                                                <b:if cond='data:label.isLast != "true"'>, </b:if>
+                                                            </b:loop>
+                                                        </span>
+                                                    </b:if>
+                                                </div>
+                                                
+                                                <div class='post-card-excerpt'>
+                                                    <b:if cond='data:post.snippet'>
+                                                        <data:post.snippet/>
+                                                    </b:if>
+                                                </div>
+                                                
+                                                <a class='read-more' expr:href='data:post.url'>
+                                                    Baca Selengkapnya →
+                                                </a>
+                                            </article>
+                                        </b:loop>
+                                    </div>
+                                    
+                                    <!-- Pagination -->
+                                    <b:if cond='data:this.pagination'>
+                                        <div class='blog-pager' id='blog-pager'>
+                                            <b:if cond='data:this.newerPageUrl'>
+                                                <a class='btn btn-primary' expr:href='data:this.newerPageUrl'>
+                                                    ← Artikel Lebih Baru
+                                                </a>
+                                            </b:if>
+                                            
+                                            <b:if cond='data:this.olderPageUrl'>
+                                                <a class='btn btn-primary' expr:href='data:this.olderPageUrl'>
+                                                    Artikel Lebih Lama →
+                                                </a>
+                                            </b:if>
+                                        </div>
+                                    </b:if>
+                                </b:if>
+                            </b:includable>
+                        </b:widget>
+                    </b:section>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class='sidebar-area'>
+                    <b:section class='sidebar' id='sidebar' showaddelement='true'>
+                        <!-- Profile Widget -->
+                        <b:widget id='Profile1' locked='false' title='Tentang Penulis' type='Profile' visible='true'>
+                            <b:widget-settings>
+                                <b:widget-setting name='showaboutme'>true</b:widget-setting>
+                                <b:widget-setting name='showlocation'>true</b:widget-setting>
+                            </b:widget-settings>
+                            <b:includable id='main' var='this'>
+                                <div class='sidebar widget'>
+                                    <h3 class='widget-title'>Tentang Penulis</h3>
+                                    <div class='widget-content'>
+                                        <b:if cond='data:team'>
+                                            <!-- Team profiles -->
+                                            <b:loop values='data:team' var='member'>
+                                                <div class='profile-info'>
+                                                    <img expr:alt='data:member.display-name' expr:src='data:member.profileImage' class='profile-img'/>
+                                                    <div class='profile-details'>
+                                                        <h4><data:member.display-name/></h4>
+                                                        <p><data:member.aboutme/></p>
+                                                    </div>
+                                                </div>
+                                            </b:loop>
+                                        <b:else/>
+                                            <!-- Single profile -->
+                                            <div class='profile-info'>
+                                                <img expr:alt='data:author' expr:src='data:authorImage' class='profile-img'/>
+                                                <div class='profile-details'>
+                                                    <h4><data:author/></h4>
+                                                    <p><data:aboutme/></p>
+                                                </div>
+                                            </div>
+                                        </b:if>
+                                    </div>
+                                </div>
+                            </b:includable>
+                        </b:widget>
+
+                        <!-- Search Widget -->
+                        <b:widget id='BlogSearch1' locked='false' title='Cari Artikel' type='BlogSearch' visible='true'>
+                            <b:includable id='main' var='this'>
+                                <div class='sidebar widget'>
+                                    <h3 class='widget-title'>Cari Artikel</h3>
+                                    <div class='widget-content'>
+                                        <form class='search-form' expr:action='data:blog.searchUrl'>
+                                            <input class='search-input' expr:placeholder='data:messages.search' name='q' type='text'/>
+                                            <button class='btn btn-primary' type='submit'>🔍</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </b:includable>
+                        </b:widget>
+
+                        <!-- Labels Widget -->
+                        <b:widget id='Label1' locked='false' title='Kategori' type='Label' visible='true'>
+                            <b:widget-settings>
+                                <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
+                                <b:widget-setting name='display'>LIST</b:widget-setting>
+                                <b:widget-setting name='selectedLabelsList'/>
+                                <b:widget-setting name='showType'>ALL</b:widget-setting>
+                                <b:widget-setting name='showFreqNumbers'>true</b:widget-setting>
+                            </b:widget-settings>
+                            <b:includable id='main' var='this'>
+                                <div class='sidebar widget'>
+                                    <h3 class='widget-title'>Kategori</h3>
+                                    <div class='widget-content'>
+                                        <b:loop values='data:labels' var='label'>
+                                            <a class='label-link' expr:href='data:label.url'>
+                                                <data:label.name/> (<data:label.count/>)
+                                            </a>
+                                        </b:loop>
+                                    </div>
+                                </div>
+                            </b:includable>
+                        </b:widget>
+
+                        <!-- Popular Posts Widget -->
+                        <b:widget id='PopularPosts1' locked='false' title='Artikel Populer' type='PopularPosts' visible='true'>
+                            <b:widget-settings>
+                                <b:widget-setting name='numItemsToShow'>5</b:widget-setting>
+                                <b:widget-setting name='showThumbnails'>true</b:widget-setting>
+                                <b:widget-setting name='showSnippets'>true</b:widget-setting>
+                                <b:widget-setting name='timeRange'>LAST_YEAR</b:widget-setting>
+                            </b:widget-settings>
+                            <b:includable id='main' var='this'>
+                                <div class='sidebar widget'>
+                                    <h3 class='widget-title'>Artikel Populer</h3>
+                                    <div class='widget-content'>
+                                        <b:loop values='data:posts' var='post'>
+                                            <div class='popular-post'>
+                                                <b:if cond='data:post.thumbnail'>
+                                                    <a class='post-thumbnail' expr:href='data:post.url'>
+                                                        <img expr:alt='data:post.title' expr:src='data:post.thumbnail'/>
+                                                    </a>
+                                                </b:if>
+                                                <div class='post-info'>
+                                                    <h4><a expr:href='data:post.url'><data:post.title/></a></h4>
+                                                    <p class='post-snippet'><data:post.snippet/></p>
+                                                </div>
+                                            </div>
+                                        </b:loop>
+                                    </div>
+                                </div>
+                            </b:includable>
+                        </b:widget>
+                    </b:section>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class='footer'>
+        <div class='container'>
+            <div class='footer-content'>
+                <!-- About Section -->
+                <div class='footer-section'>
+                    <h3>Tentang Blog</h3>
+                    <p>Blog ini menyajikan berbagai tutorial dan tips seputar teknologi, pemrograman, dan pengembangan web.</p>
+                    <ul>
+                        <li><a href='/p/tentang.html'>Tentang Kami</a></li>
+                        <li><a href='/p/kontak.html'>Kontak</a></li>
+                        <li><a href='/p/privacy-policy.html'>Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categories Section -->
+                <div class='footer-section'>
+                    <h3>Kategori Populer</h3>
+                    <ul>
+                        <li><a href='/search/label/Tutorial'>Tutorial</a></li>
+                        <li><a href='/search/label/Tips'>Tips &amp; Trik</a></li>
+                        <li><a href='/search/label/Review'>Review</a></li>
+                        <li><a href='/search/label/Teknologi'>Teknologi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Section -->
+                <div class='footer-section'>
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li>📧 Email: info@example.com</li>
+                        <li>📱 WhatsApp: +62 123 456 789</li>
+                        <li>📍 Lokasi: Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class='footer-bottom'>
+                <p>
+                    © <span class='current-year'>2024</span> <data:blog.title/>. 
+                    Semua hak cipta dilindungi.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

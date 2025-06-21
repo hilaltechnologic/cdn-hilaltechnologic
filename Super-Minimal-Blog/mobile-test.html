@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Responsiveness Test - BaseTemplate Builder</title>
+    <style>
+        /* Import template styles for mobile testing */
+        :root {
+          --primary-color: #2563eb;
+          --secondary-color: #64748b;
+          --accent-color: #f59e0b;
+          --bg-primary: #ffffff;
+          --bg-secondary: #f8fafc;
+          --bg-tertiary: #e2e8f0;
+          --text-primary: #1e293b;
+          --text-secondary: #64748b;
+          --text-muted: #94a3b8;
+          --border-light: #e2e8f0;
+          --border-medium: #cbd5e1;
+          --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+          --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+          --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+          --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          --space-xs: 0.25rem;
+          --space-sm: 0.5rem;
+          --space-md: 1rem;
+          --space-lg: 1.5rem;
+          --space-xl: 2rem;
+          --space-2xl: 3rem;
+          --radius-sm: 0.25rem;
+          --radius-md: 0.5rem;
+          --radius-lg: 0.75rem;
+          --container-lg: 1024px;
+        }
+
+        [data-theme="dark"] {
+          --bg-primary: #0f172a;
+          --bg-secondary: #1e293b;
+          --bg-tertiary: #334155;
+          --text-primary: #f1f5f9;
+          --text-secondary: #cbd5e1;
+          --text-muted: #64748b;
+          --border-light: #334155;
+          --border-medium: #475569;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: var(--font-primary);
+          font-size: 16px;
+          line-height: 1.6;
+          color: var(--text-primary);
+          background-color: var(--bg-primary);
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+          max-width: var(--container-lg);
+          margin: 0 auto;
+          padding: 0 var(--space-md);
+        }
+
+        /* Header Styles */
+        .header {
+          background-color: var(--bg-primary);
+          border-bottom: 1px solid var(--border-light);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          backdrop-filter: blur(10px);
+          box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: var(--space-md) 0;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: var(--primary-color);
+          text-decoration: none;
+        }
+
+        .nav {
+          display: flex;
+          align-items: center;
+          gap: var(--space-lg);
+        }
+
+        .nav-menu {
+          display: flex;
+          list-style: none;
+          gap: var(--space-lg);
+          margin: 0;
+          padding: 0;
+        }
+
+        .nav-link {
+          color: var(--text-secondary);
+          font-weight: 500;
+          padding: var(--space-sm) var(--space-md);
+          border-radius: var(--radius-md);
+          transition: all 0.2s ease;
+          text-decoration: none;
+        }
+
+        .nav-link:hover {
+          color: var(--primary-color);
+          background-color: var(--bg-secondary);
+        }
+
+        .theme-toggle {
+          background: none;
+          border: none;
+          font-size: 1.25rem;
+          cursor: pointer;
+          padding: var(--space-sm);
+          border-radius: var(--radius-md);
+          transition: background-color 0.2s ease;
+        }
+
+        .mobile-menu-toggle {
+          display: none;
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          color: var(--text-primary);
+          cursor: pointer;
+        }
+
+        /* Main Content */
+        .main {
+          padding: var(--space-2xl) 0;
+        }
+
+        .content-grid {
+          display: grid;
+          grid-template-columns: 1fr 300px;
+          gap: 2rem;
+        }
+
+        /* Post Styles */
+        .post-card {
+          background-color: var(--bg-primary);
+          border-radius: var(--radius-lg);
+          padding: var(--space-xl);
+          margin-bottom: var(--space-xl);
+          box-shadow: var(--shadow-md);
+          border: 1px solid var(--border-light);
+        }
+
+        .post-card-title {
+          font-size: 1.5rem;
+          margin-bottom: var(--space-md);
+          color: var(--text-primary);
+        }
+
+        .post-meta {
+          display: flex;
+          align-items: center;
+          gap: var(--space-md);
+          color: var(--text-muted);
+          font-size: 0.875rem;
+          margin-bottom: var(--space-lg);
+        }
+
+        .post-card-excerpt {
+          color: var(--text-secondary);
+          margin-bottom: var(--space-lg);
+        }
+
+        /* Sidebar */
+        .sidebar {
+          background-color: var(--bg-secondary);
+          border-radius: var(--radius-lg);
+          padding: var(--space-xl);
+          margin-bottom: var(--space-xl);
+        }
+
+        .widget-title {
+          font-size: 1.25rem;
+          margin-bottom: var(--space-lg);
+          color: var(--text-primary);
+          border-bottom: 2px solid var(--primary-color);
+          padding-bottom: var(--space-sm);
+        }
+
+        /* Test Status */
+        .test-status {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          background: var(--bg-secondary);
+          padding: 1rem;
+          border-radius: var(--radius-md);
+          box-shadow: var(--shadow-lg);
+          z-index: 9999;
+          max-width: 300px;
+        }
+
+        .test-item {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.5rem;
+          font-size: 0.875rem;
+        }
+
+        .pass { color: var(--primary-color); }
+        .fail { color: #ef4444; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .container {
+            padding: 0 var(--space-sm);
+          }
+          
+          .header-content {
+            flex-direction: column;
+            gap: var(--space-md);
+          }
+          
+          .nav-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            box-shadow: var(--shadow-lg);
+          }
+          
+          .nav-menu.active {
+            display: flex;
+          }
+          
+          .mobile-menu-toggle {
+            display: block;
+          }
+          
+          .content-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .post-card {
+            padding: var(--space-lg);
+          }
+          
+          .post-card-title {
+            font-size: 1.25rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .post-card {
+            padding: var(--space-md);
+          }
+          
+          .post-card-title {
+            font-size: 1.125rem;
+          }
+          
+          .logo {
+            font-size: 1.25rem;
+          }
+        }
+    </style>
+</head>
+<body>
+    <!-- Test Status Display -->
+    <div class="test-status" id="testStatus">
+        <h4>📱 Mobile Test Status</h4>
+        <div id="testResults"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a class="logo" href="#">BaseTemplate Builder</a>
+                
+                <nav class="nav">
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a class="nav-link" href="#">Beranda</a></li>
+                        <li><a class="nav-link" href="#">Tutorial</a></li>
+                        <li><a class="nav-link" href="#">Tips</a></li>
+                        <li><a class="nav-link" href="#">Tentang</a></li>
+                        <li><a class="nav-link" href="#">Kontak</a></li>
+                    </ul>
+                    
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                    
+                    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                        ☰
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Content Area -->
+                <div class="content-area">
+                    <article class="post-card">
+                        <h2 class="post-card-title">
+                            <a href="#" style="color: var(--text-primary); text-decoration: none;">
+                                Testing Mobile Responsiveness
+                            </a>
+                        </h2>
+                        
+                        <div class="post-meta">
+                            <span>📅 15 Des 2024</span>
+                            <span>👤 Admin</span>
+                        </div>
+                        
+                        <div class="post-card-excerpt">
+                            Template ini dirancang untuk memberikan pengalaman optimal di semua perangkat, dari desktop hingga mobile.
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <h2 class="post-card-title">
+                            <a href="#" style="color: var(--text-primary); text-decoration: none;">
+                                Grid Layout Responsif
+                            </a>
+                        </h2>
+                        
+                        <div class="post-meta">
+                            <span>📅 14 Des 2024</span>
+                            <span>👤 Admin</span>
+                        </div>
+                        
+                        <div class="post-card-excerpt">
+                            Layout grid otomatis menyesuaikan dari 2 kolom di desktop menjadi 1 kolom di mobile.
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="sidebar-area">
+                    <div class="sidebar">
+                        <h3 class="widget-title">Mobile Widget</h3>
+                        <p style="color: var(--text-secondary);">
+                            Widget sidebar akan muncul di bawah konten utama pada tampilan mobile.
+                        </p>
+                    </div>
+
+                    <div class="sidebar">
+                        <h3 class="widget-title">Responsive Test</h3>
+                        <p style="color: var(--text-secondary);">
+                            Ubah ukuran browser untuk melihat perubahan layout.
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile responsiveness tests
+        const mobileTests = [
+            {
+                name: 'Mobile Menu Toggle Visible',
+                test: () => {
+                    const toggle = document.querySelector('.mobile-menu-toggle');
+                    const style = getComputedStyle(toggle);
+                    return window.innerWidth <= 768 ? style.display !== 'none' : style.display === 'none';
+                }
+            },
+            {
+                name: 'Grid Layout Responsive',
+                test: () => {
+                    const grid = document.querySelector('.content-grid');
+                    const style = getComputedStyle(grid);
+                    if (window.innerWidth <= 768) {
+                        return style.gridTemplateColumns.includes('1fr');
+                    } else {
+                        return style.gridTemplateColumns.includes('300px');
+                    }
+                }
+            },
+            {
+                name: 'Container Padding Adjusted',
+                test: () => {
+                    const container = document.querySelector('.container');
+                    const style = getComputedStyle(container);
+                    return style.paddingLeft && style.paddingRight;
+                }
+            },
+            {
+                name: 'Post Card Padding Responsive',
+                test: () => {
+                    const postCard = document.querySelector('.post-card');
+                    const style = getComputedStyle(postCard);
+                    return style.padding;
+                }
+            },
+            {
+                name: 'Font Sizes Responsive',
+                test: () => {
+                    const title = document.querySelector('.post-card-title');
+                    const style = getComputedStyle(title);
+                    return style.fontSize;
+                }
+            }
+        ];
+
+        function runMobileTests() {
+            const testResults = document.getElementById('testResults');
+            let passedTests = 0;
+            
+            const results = mobileTests.map(test => {
+                const passed = test.test();
+                if (passed) passedTests++;
+                
+                return `
+                    <div class="test-item">
+                        <span>${test.name}</span>
+                        <span class="${passed ? 'pass' : 'fail'}">${passed ? '✓' : '✗'}</span>
+                    </div>
+                `;
+            }).join('');
+
+            const summary = `
+                <div style="margin-bottom: 1rem;">
+                    <strong>${passedTests}/${mobileTests.length}</strong> tests passed
+                </div>
+            `;
+
+            testResults.innerHTML = summary + results;
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Run tests on load and resize
+        document.addEventListener('DOMContentLoaded', runMobileTests);
+        window.addEventListener('resize', () => {
+            setTimeout(runMobileTests, 100);
+        });
+
+        // Log viewport changes
+        window.addEventListener('resize', () => {
+            console.log('📱 Viewport changed to:', window.innerWidth + 'x' + window.innerHeight);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<meta charset='utf-8'/>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+<title><data:blog.pageTitle/></title>
+
+<!-- SEO Meta Tags -->
+<meta expr:content='data:blog.metaDescription ? data:blog.metaDescription : data:blog.title' name='description'/>
+<meta expr:content='data:blog.title' name='keywords'/>
+<meta content='index, follow' name='robots'/>
+<meta expr:content='data:blog.locale' name='language'/>
+<meta content='blogger' name='generator'/>
+
+<!-- Canonical URL -->
+<b:if cond='data:blog.url == data:blog.homepageUrl'>
+  <link expr:href='data:blog.homepageUrl' rel='canonical'/>
+<b:else/>
+  <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
+</b:if>
+
+<!-- Open Graph Meta Tags -->
+<meta content='website' property='og:type'/>
+<meta expr:content='data:blog.title' property='og:site_name'/>
+<meta expr:content='data:blog.pageTitle' property='og:title'/>
+<meta expr:content='data:blog.metaDescription ? data:blog.metaDescription : data:blog.title' property='og:description'/>
+<meta expr:content='data:blog.url' property='og:url'/>
+<b:if cond='data:blog.postImageUrl'>
+  <meta expr:content='data:blog.postImageUrl' property='og:image'/>
+</b:if>
+
+<!-- Twitter Card Meta Tags -->
+<meta content='summary_large_image' name='twitter:card'/>
+<meta expr:content='data:blog.pageTitle' name='twitter:title'/>
+<meta expr:content='data:blog.metaDescription ? data:blog.metaDescription : data:blog.title' name='twitter:description'/>
+<b:if cond='data:blog.postImageUrl'>
+  <meta expr:content='data:blog.postImageUrl' name='twitter:image'/>
+</b:if>
+
+<!-- Favicon -->
+<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj8QyPzVfZKJvzKJvzKJvzKJvzKJvzKJvzK/s1600/favicon.ico' rel='icon' type='image/x-icon'/>
+
+<b:skin><![CDATA[
+/* ===================================
+   Super Minimal Blog - Modern Blogger Template
+   Author: Hilal Technologic
+   Version: 1.0
+   Description: Clean, modern, and responsive Blogger template
+=================================== */
+
+/* CSS Variables for Easy Customization */
+:root {
+  /* Colors */
+  --primary-color: #2563eb;
+  --secondary-color: #64748b;
+  --accent-color: #f59e0b;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #e2e8f0;
+  
+  /* Text Colors */
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  
+  /* Border Colors */
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-dark: #94a3b8;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Typography */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-secondary: Georgia, 'Times New Roman', serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --border-light: #334155;
+  --border-medium: #475569;
+  --border-dark: #64748b;
+}
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1.125rem; }
+
+p {
+  margin-bottom: var(--space-md);
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+/* Layout Components */
+.container {
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.container-fluid {
+  width: 100%;
+  padding: 0 var(--space-md);
+}
+
+/* Header Styles */
+.header {
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) 0;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: var(--accent-color);
+}
+
+/* Navigation Styles */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: var(--space-lg);
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+  background-color: var(--bg-secondary);
+}
+
+/* Mobile Menu */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  transition: background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Main Content */
+.main {
+  min-height: calc(100vh - 200px);
+  padding: var(--space-2xl) 0;
+}
+
+/* Post Styles */
+.post {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+}
+
+.post-header {
+  margin-bottom: var(--space-xl);
+}
+
+.post-title {
+  font-size: 2.25rem;
+  margin-bottom: var(--space-md);
+  line-height: 1.1;
+}
+
+.post-title a {
+  color: var(--text-primary);
+}
+
+.post-title a:hover {
+  color: var(--primary-color);
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-lg);
+}
+
+.post-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.post-content {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-lg);
+}
+
+.post-content blockquote {
+  border-left: 4px solid var(--primary-color);
+  padding-left: var(--space-lg);
+  margin: var(--space-xl) 0;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.post-content code {
+  background-color: var(--bg-secondary);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.post-content pre {
+  background-color: var(--bg-secondary);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: var(--space-xl) 0;
+}
+
+.post-content pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Post Card (for homepage/archive) */
+.post-card {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.post-card-title {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.post-card-excerpt {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--primary-color);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.read-more:hover {
+  color: var(--accent-color);
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.widget {
+  margin-bottom: var(--space-2xl);
+}
+
+.widget:last-child {
+  margin-bottom: 0;
+}
+
+.widget-title {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: var(--space-sm);
+}
+
+.widget-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.widget-content li {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.widget-content li:last-child {
+  border-bottom: none;
+}
+
+.widget-content a {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.widget-content a:hover {
+  color: var(--primary-color);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
+  padding: var(--space-2xl) 0;
+  margin-top: var(--space-2xl);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-xl);
+}
+
+.footer-section h3 {
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: var(--space-sm);
+}
+
+.footer-section a {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+  color: var(--primary-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--border-light);
+  color: var(--text-muted);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Utilities */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-xs); }
+.mt-2 { margin-top: var(--space-sm); }
+.mt-3 { margin-top: var(--space-md); }
+.mt-4 { margin-top: var(--space-lg); }
+.mt-5 { margin-top: var(--space-xl); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-xs); }
+.mb-2 { margin-bottom: var(--space-sm); }
+.mb-3 { margin-bottom: var(--space-md); }
+.mb-4 { margin-bottom: var(--space-lg); }
+.mb-5 { margin-bottom: var(--space-xl); }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-sm);
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .nav-menu.active {
+    display: flex;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  .post {
+    padding: var(--space-lg);
+  }
+  
+  .post-title {
+    font-size: 1.75rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .post {
+    padding: var(--space-md);
+  }
+  
+  .post-title {
+    font-size: 1.5rem;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* Loading States */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+]]></b:skin>
+
+<b:template-skin>
+<![CDATA[
+body#layout .header {
+  position: static;
+  margin-bottom: 20px;
+}
+
+body#layout .container {
+  max-width: none;
+  padding: 10px;
+}
+
+body#layout .sidebar {
+  background: #f5f5f5;
+  border: 1px dashed #ccc;
+  margin: 10px 0;
+}
+]]>
+</b:template-skin>
+</head>
+
+<body>
+<!-- Header -->
+<header class='header'>
+  <div class='container'>
+    <div class='header-content'>
+      <a class='logo' expr:href='data:blog.homepageUrl'>
+        <data:blog.title/>
+      </a>
+      
+      <nav class='nav'>
+        <ul class='nav-menu' id='navMenu'>
+          <li class='nav-item'>
+            <a class='nav-link' expr:href='data:blog.homepageUrl'>Beranda</a>
+          </li>
+          <li class='nav-item'>
+            <a class='nav-link' href='/search/label/Tutorial'>Tutorial</a>
+          </li>
+          <li class='nav-item'>
+            <a class='nav-link' href='/search/label/Tips'>Tips</a>
+          </li>
+          <li class='nav-item'>
+            <a class='nav-link' href='/p/about.html'>Tentang</a>
+          </li>
+          <li class='nav-item'>
+            <a class='nav-link' href='/p/contact.html'>Kontak</a>
+          </li>
+        </ul>
+        
+        <button class='theme-toggle' onclick='toggleTheme()' title='Toggle Theme'>
+          <span id='themeIcon'>🌙</span>
+        </button>
+        
+        <button class='mobile-menu-toggle' onclick='toggleMobileMenu()'>
+          ☰
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class='main'>
+  <div class='container'>
+    <div style='display: grid; grid-template-columns: 1fr 300px; gap: 2rem;'>
+      
+      <!-- Blog Posts Area -->
+      <div class='content-area'>
+        <b:section id='main' class='main-section' showaddelement='yes'>
+          <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
+            <b:widget-settings>
+              <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+              <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+              <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+              <b:widget-setting name='showAuthor'>true</b:widget-setting>
+              <b:widget-setting name='showLabels'>true</b:widget-setting>
+              <b:widget-setting name='showLocation'>false</b:widget-setting>
+              <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+              <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+              <b:widget-setting name='showReactions'>false</b:widget-setting>
+            </b:widget-settings>
+            
+            <b:includable id='main' var='top'>
+              <b:loop values='data:posts' var='post'>
+                <b:if cond='data:blog.pageType == "item"'>
+                  <!-- Single Post View -->
+                  <article class='post fade-in' itemscope='' itemtype='https://schema.org/BlogPosting'>
+                    <header class='post-header'>
+                      <h1 class='post-title' itemprop='headline'>
+                        <data:post.title/>
+                      </h1>
+                      
+                      <div class='post-meta'>
+                        <div class='post-meta-item'>
+                          <span>📅</span>
+                          <time expr:datetime='data:post.date.iso8601' itemprop='datePublished'>
+                            <data:post.date/>
+                          </time>
+                        </div>
+                        
+                        <b:if cond='data:post.author'>
+                          <div class='post-meta-item'>
+                            <span>👤</span>
+                            <span itemprop='author' itemscope='' itemtype='https://schema.org/Person'>
+                              <span itemprop='name'><data:post.author/></span>
+                            </span>
+                          </div>
+                        </b:if>
+                        
+                        <b:if cond='data:post.labels'>
+                          <div class='post-meta-item'>
+                            <span>🏷️</span>
+                            <b:loop values='data:post.labels' var='label'>
+                              <a expr:href='data:label.url' rel='tag'><data:label.name/></a>
+                              <b:if cond='data:label.isLast != "true"'>, </b:if>
+                            </b:loop>
+                          </div>
+                        </b:if>
+                      </div>
+                    </header>
+                    
+                    <div class='post-content' itemprop='articleBody'>
+                      <data:post.body/>
+                    </div>
+                    
+                    <meta expr:content='data:post.url' itemprop='url'/>
+                    <meta expr:content='data:post.date.iso8601' itemprop='dateModified'/>
+                  </article>
+                  
+                <b:else/>
+                  <!-- Post Card View (Homepage/Archive) -->
+                  <article class='post-card fade-in' itemscope='' itemtype='https://schema.org/BlogPosting'>
+                    <h2 class='post-card-title'>
+                      <a expr:href='data:post.url' itemprop='headline'>
+                        <data:post.title/>
+                      </a>
+                    </h2>
+                    
+                    <div class='post-meta'>
+                      <div class='post-meta-item'>
+                        <span>📅</span>
+                        <time expr:datetime='data:post.date.iso8601' itemprop='datePublished'>
+                          <data:post.date/>
+                        </time>
+                      </div>
+                      
+                      <b:if cond='data:post.author'>
+                        <div class='post-meta-item'>
+                          <span>👤</span>
+                          <span itemprop='author' itemscope='' itemtype='https://schema.org/Person'>
+                            <span itemprop='name'><data:post.author/></span>
+                          </span>
+                        </div>
+                      </b:if>
+                    </div>
+                    
+                    <div class='post-card-excerpt' itemprop='description'>
+                      <data:post.snippet/>
+                    </div>
+                    
+                    <a class='read-more' expr:href='data:post.url'>
+                      Baca Selengkapnya →
+                    </a>
+                    
+                    <meta expr:content='data:post.url' itemprop='url'/>
+                  </article>
+                </b:if>
+              </b:loop>
+              
+              <!-- Pagination -->
+              <b:include name='nextprev'/>
+            </b:includable>
+            
+            <b:includable id='nextprev'>
+              <div class='pagination' style='display: flex; justify-content: space-between; margin-top: 2rem;'>
+                <b:if cond='data:newerPageUrl'>
+                  <a class='btn btn-secondary' expr:href='data:newerPageUrl'>← Postingan Terbaru</a>
+                <b:else/>
+                  <span></span>
+                </b:if>
+                
+                <b:if cond='data:olderPageUrl'>
+                  <a class='btn btn-secondary' expr:href='data:olderPageUrl'>Postingan Lama →</a>
+                <b:else/>
+                  <span></span>
+                </b:if>
+              </div>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </div>
+      
+      <!-- Sidebar -->
+      <aside class='sidebar-area' style='grid-column: 2;'>
+        <!-- Profile Widget -->
+        <b:section id='sidebar' class='sidebar-section' showaddelement='yes'>
+          <b:widget id='Profile1' locked='false' title='Profil' type='Profile'>
+            <b:includable id='main'>
+              <div class='sidebar widget'>
+                <h3 class='widget-title'>Tentang Penulis</h3>
+                <div class='widget-content'>
+                  <b:if cond='data:photo'>
+                    <img expr:src='data:photo' style='width: 80px; height: 80px; border-radius: 50%; margin-bottom: 1rem;'/>
+                  </b:if>
+                  <p><data:description/></p>
+                  <b:if cond='data:location'>
+                    <p><strong>Lokasi:</strong> <data:location/></p>
+                  </b:if>
+                </div>
+              </div>
+            </b:includable>
+          </b:widget>
+          
+          <!-- Popular Posts Widget -->
+          <b:widget id='PopularPosts1' locked='false' title='Postingan Popular' type='PopularPosts'>
+            <b:includable id='main'>
+              <div class='sidebar widget'>
+                <h3 class='widget-title'>Postingan Populer</h3>
+                <div class='widget-content'>
+                  <b:loop values='data:posts' var='post'>
+                    <div style='display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-light);'>
+                      <b:if cond='data:post.thumbnail'>
+                        <img expr:src='data:post.thumbnail' style='width: 60px; height: 60px; object-fit: cover; border-radius: var(--radius-md); flex-shrink: 0;'/>
+                      </b:if>
+                      <div>
+                        <h4 style='font-size: 0.875rem; margin-bottom: 0.25rem;'>
+                          <a expr:href='data:post.href' style='color: var(--text-primary);'><data:post.title/></a>
+                        </h4>
+                        <small style='color: var(--text-muted);'><data:post.snippet/></small>
+                      </div>
+                    </div>
+                  </b:loop>
+                </div>
+              </div>
+            </b:includable>
+          </b:widget>
+          
+          <!-- Archive Widget -->
+          <b:widget id='BlogArchive1' locked='false' title='Arsip Blog' type='BlogArchive'>
+            <b:includable id='main'>
+              <div class='sidebar widget'>
+                <h3 class='widget-title'>Arsip</h3>
+                <div class='widget-content'>
+                  <ul>
+                    <b:loop values='data:data' var='i'>
+                      <li>
+                        <a expr:href='data:i.url'>
+                          <data:i.name/> (<data:i.post-count/>)
+                        </a>
+                        <b:if cond='data:i.data'>
+                          <ul style='margin-left: 1rem; margin-top: 0.5rem;'>
+                            <b:loop values='data:i.data' var='j'>
+                              <li style='margin-bottom: 0.25rem;'>
+                                <a expr:href='data:j.url'>
+                                  <data:j.name/> (<data:j.post-count/>)
+                                </a>
+                              </li>
+                            </b:loop>
+                          </ul>
+                        </b:if>
+                      </li>
+                    </b:loop>
+                  </ul>
+                </div>
+              </div>
+            </b:includable>
+          </b:widget>
+          
+          <!-- Labels Widget -->
+          <b:widget id='Label1' locked='false' title='Kategori' type='Label'>
+            <b:includable id='main'>
+              <div class='sidebar widget'>
+                <h3 class='widget-title'>Kategori</h3>
+                <div class='widget-content'>
+                  <div style='display: flex; flex-wrap: wrap; gap: 0.5rem;'>
+                    <b:loop values='data:labels' var='label'>
+                      <a expr:href='data:label.url' style='background: var(--bg-tertiary); padding: 0.25rem 0.75rem; border-radius: var(--radius-md); font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; transition: all 0.2s ease;' onmouseover='this.style.background="var(--primary-color)"; this.style.color="white";' onmouseout='this.style.background="var(--bg-tertiary)"; this.style.color="var(--text-secondary)";'>
+                        <data:label.name/> (<data:label.count/>)
+                      </a>
+                    </b:loop>
+                  </div>
+                </div>
+              </div>
+            </b:includable>
+          </b:widget>
+          
+          <!-- Search Widget -->
+          <b:widget id='HTML1' locked='false' title='Pencarian' type='HTML'>
+            <b:includable id='main'>
+              <div class='sidebar widget'>
+                <h3 class='widget-title'>Cari Artikel</h3>
+                <div class='widget-content'>
+                  <form expr:action='data:blog.homepageUrl + "search"' method='get' style='display: flex; gap: 0.5rem;'>
+                    <input name='q' placeholder='Masukkan kata kunci...' style='flex: 1; padding: 0.75rem; border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--bg-primary); color: var(--text-primary);' type='text'/>
+                    <button style='padding: 0.75rem 1rem; background: var(--primary-color); color: white; border: none; border-radius: var(--radius-md); cursor: pointer;' type='submit'>🔍</button>
+                  </form>
+                </div>
+              </div>
+            </b:includable>
+          </b:widget>
+          
+          <!-- Social Media Widget -->
+          <b:widget id='HTML2' locked='false' title='Media Sosial' type='HTML'>
+            <b:includable id='main'>
+              <div class='sidebar widget'>
+                <h3 class='widget-title'>Ikuti Kami</h3>
+                <div class='widget-content'>
+                  <div style='display: flex; gap: 1rem; justify-content: center;'>
+                    <a href='#' style='display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #1877f2; color: white; border-radius: 50%; text-decoration: none; font-size: 1.25rem;' title='Facebook'>📘</a>
+                    <a href='#' style='display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #1da1f2; color: white; border-radius: 50%; text-decoration: none; font-size: 1.25rem;' title='Twitter'>🐦</a>
+                    <a href='#' style='display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #e4405f; color: white; border-radius: 50%; text-decoration: none; font-size: 1.25rem;' title='Instagram'>📷</a>
+                    <a href='#' style='display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #ff0000; color: white; border-radius: 50%; text-decoration: none; font-size: 1.25rem;' title='YouTube'>📺</a>
+                  </div>
+                </div>
+              </div>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class='footer'>
+  <div class='container'>
+    <div class='footer-content'>
+      <div class='footer-section'>
+        <h3>Tentang Blog</h3>
+        <p style='color: var(--text-secondary); margin-bottom: 1rem;'>
+          Blog ini menyajikan konten berkualitas tentang teknologi, tutorial, dan tips menarik untuk pembaca setia kami.
+        </p>
+        <ul>
+          <li><a href='/p/about.html'>Tentang Kami</a></li>
+          <li><a href='/p/contact.html'>Kontak</a></li>
+          <li><a href='/p/privacy.html'>Kebijakan Privasi</a></li>
+        </ul>
+      </div>
+      
+      <div class='footer-section'>
+        <h3>Kategori Populer</h3>
+        <ul>
+          <li><a href='/search/label/Tutorial'>Tutorial</a></li>
+          <li><a href='/search/label/Tips'>Tips &amp; Trik</a></li>
+          <li><a href='/search/label/Review'>Review</a></li>
+          <li><a href='/search/label/Teknologi'>Teknologi</a></li>
+        </ul>
+      </div>
+      
+      <div class='footer-section'>
+        <h3>Kontak</h3>
+        <ul>
+          <li>📧 Email: info@example.com</li>
+          <li>📱 WhatsApp: +62 123 456 789</li>
+          <li>📍 Lokasi: Indonesia</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class='footer-bottom'>
+      <p>
+        © <span id='currentYear'></span> <data:blog.title/>. 
+        Semua hak cipta dilindungi. 
+        Template oleh <a href='#' style='color: var(--primary-color);'>BaseTemplate Builder</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+//<![CDATA[
+// Set current year
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('currentYear').textContent = new Date().getFullYear();
+});
+
+// Mobile menu toggle
+function toggleMobileMenu() {
+  const navMenu = document.getElementById('navMenu');
+  navMenu.classList.toggle('active');
+}
+
+// Theme toggle functionality
+function toggleTheme() {
+  const body = document.body;
+  const themeIcon = document.getElementById('themeIcon');
+  const currentTheme = body.getAttribute('data-theme');
+  
+  if (currentTheme === 'dark') {
+    body.removeAttribute('data-theme');
+    themeIcon.textContent = '🌙';
+    localStorage.setItem('theme', 'light');
+  } else {
+    body.setAttribute('data-theme', 'dark');
+    themeIcon.textContent = '☀️';
+    localStorage.setItem('theme', 'dark');
+  }
+}
+
+// Load saved theme
+document.addEventListener('DOMContentLoaded', function() {
+  const savedTheme = localStorage.getItem('theme');
+  const themeIcon = document.getElementById('themeIcon');
+  
+  if (savedTheme === 'dark') {
+    document.body.setAttribute('data-theme', 'dark');
+    themeIcon.textContent = '☀️';
+  } else {
+    themeIcon.textContent = '🌙';
+  }
+});
+
+// Smooth scrolling for anchor links
+document.addEventListener('DOMContentLoaded', function() {
+  const links = document.querySelectorAll('a[href^="#"]');
+  
+  links.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e) {
+  const navMenu = document.getElementById('navMenu');
+  const mobileToggle = document.querySelector('.mobile-menu-toggle');
+  
+  if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+    navMenu.classList.remove('active');
+  }
+});
+
+// Add fade-in animation to posts on scroll
+function addFadeInAnimation() {
+  const posts = document.querySelectorAll('.post-card, .post');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+  
+  posts.forEach(post => {
+    observer.observe(post);
+  });
+}
+
+// Initialize animations
+document.addEventListener('DOMContentLoaded', addFadeInAnimation);
+
+// Search functionality enhancement
+document.addEventListener('DOMContentLoaded', function() {
+  const searchForm = document.querySelector('form[action*="search"]');
+  
+  if (searchForm) {
+    searchForm.addEventListener('submit', function(e) {
+      const searchInput = this.querySelector('input[name="q"]');
+      
+      if (!searchInput.value.trim()) {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.style.borderColor = 'var(--error-color)';
+        
+        setTimeout(() => {
+          searchInput.style.borderColor = 'var(--border-medium)';
+        }, 2000);
+      }
+    });
+  }
+});
+
+// Back to top button
+function createBackToTopButton() {
+  const button = document.createElement('button');
+  button.innerHTML = '↑';
+  button.style.cssText = `
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: var(--shadow-lg);
+  `;
+  
+  button.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  
+  document.body.appendChild(button);
+  
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      button.style.opacity = '1';
+      button.style.visibility = 'visible';
+    } else {
+      button.style.opacity = '0';
+      button.style.visibility = 'hidden';
+    }
+  });
+}
+
+// Initialize back to top button
+document.addEventListener('DOMContentLoaded', createBackToTopButton);
+
+// Reading progress bar
+function createReadingProgressBar() {
+  const progressBar = document.createElement('div');
+  progressBar.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--primary-color);
+    z-index: 9999;
+    transition: width 0.1s ease;
+  `;
+  
+  document.body.appendChild(progressBar);
+  
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    
+    progressBar.style.width = scrolled + '%';
+  });
+}
+
+// Initialize reading progress bar for single posts
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.querySelector('.post:not(.post-card)')) {
+    createReadingProgressBar();
+  }
+});
+
+// Print functionality
+function addPrintStyles() {
+  const printStyles = `
+    @media print {
+      .header, .footer, .sidebar, .mobile-menu-toggle, .theme-toggle {
+        display: none !important;
+      }
+      
+      .main {
+        padding: 0 !important;
+      }
+      
+      .post {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+      }
+      
+      .container {
+        max-width: none !important;
+        padding: 0 !important;
+      }
+      
+      body {
+        background: white !important;
+        color: black !important;
+      }
+    }
+  `;
+  
+  const style = document.createElement('style');
+  style.textContent = printStyles;
+  document.head.appendChild(style);
+}
+
+// Initialize print styles
+document.addEventListener('DOMContentLoaded', addPrintStyles);
+
+// Image lazy loading fallback
+document.addEventListener('DOMContentLoaded', function() {
+  const images = document.querySelectorAll('img');
+  
+  if ('loading' in HTMLImageElement.prototype) {
+    images.forEach(img => {
+      img.loading = 'lazy';
+    });
+  } else {
+    // Fallback for browsers that don't support native lazy loading
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src || img.src;
+          img.classList.remove('lazy');
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+  }
+});
+//]]>
+</script>
+
+<!-- Structured Data for Website -->
+<script type='application/ld+json'>
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "<data:blog.title/>",
+  "description": "<data:blog.metaDescription/>",
+  "url": "<data:blog.homepageUrl/>",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "<data:blog.homepageUrl/>search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "<data:blog.title/>",
+    "url": "<data:blog.homepageUrl/>"
+  }
+}
+</script>
+
+<!-- Structured Data for Blog -->
+<b:if cond='data:blog.pageType == "item"'>
+<script type='application/ld+json'>
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "<data:blog.pageName/>",
+  "description": "<data:blog.metaDescription/>",
+  "author": {
+    "@type": "Person",
+    "name": "<data:post.author/>"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "<data:blog.title/>",
+    "url": "<data:blog.homepageUrl/>"
+  },
+  "datePublished": "<data:post.date.iso8601/>",
+  "dateModified": "<data:post.date.iso8601/>",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "<data:blog.canonicalUrl/>"
+  },
+  "url": "<data:blog.canonicalUrl/>"
+}
+</script>
+</b:if>
+
+</body>
+</html>
