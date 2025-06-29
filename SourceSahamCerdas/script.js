@@ -13,6 +13,13 @@ function initializeTemplate() {
     setupLazyLoading();
     setupSmoothScrolling();
     setupStockPriceSimulation();
+    setupBackToTop();
+    setupReadingProgress();
+    
+    // Initialize reading progress on blog post pages
+    if (document.querySelector('.post-content')) {
+        setupReadingProgress();
+    }
 }
 
 // Mobile Menu Toggle
@@ -379,13 +386,11 @@ function setupReadingProgress() {
     });
 }
 
-// Initialize reading progress on blog post pages
-if (document.querySelector('.post-content')) {
-    setupReadingProgress();
-}
-
 // Back to Top Button
 function setupBackToTop() {
+    // Check if button already exists
+    if (document.querySelector('.back-to-top')) return;
+
     const backToTopBtn = document.createElement('button');
     backToTopBtn.className = 'back-to-top';
     backToTopBtn.innerHTML = '↑';
@@ -429,8 +434,6 @@ function setupBackToTop() {
     });
 }
 
-// Initialize back to top button
-setupBackToTop();
 
 // Console welcome message
 console.log('%c🚀 Template Saham Cerdas berhasil dimuat!', 'color: #1a73e8; font-size: 16px; font-weight: bold;');
