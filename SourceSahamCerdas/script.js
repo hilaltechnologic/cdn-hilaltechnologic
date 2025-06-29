@@ -7,18 +7,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize Template Functions
 function initializeTemplate() {
-    setupMobileMenu();
-    setupSearchEnhancements();
-    setupScrollEffects();
-    setupLazyLoading();
-    setupSmoothScrolling();
-    setupStockPriceSimulation();
-    setupBackToTop();
-    setupReadingProgress();
-    
-    // Initialize reading progress on blog post pages
-    if (document.querySelector('.post-content')) {
+    // Ensure body is available before setting up features
+    if (document.body) {
+        setupMobileMenu();
+        setupSearchEnhancements();
+        setupScrollEffects();
+        setupLazyLoading();
+        setupSmoothScrolling();
+        setupStockPriceSimulation();
+        setupBackToTop();
         setupReadingProgress();
+        
+        // Initialize reading progress on blog post pages
+        if (document.querySelector('.post-content')) {
+            setupReadingProgress();
+        }
+    } else {
+        // If body is not available, wait for it
+        window.addEventListener('load', initializeTemplate);
     }
 }
 
@@ -388,50 +394,57 @@ function setupReadingProgress() {
 
 // Back to Top Button
 function setupBackToTop() {
-    // Check if button already exists
-    if (document.querySelector('.back-to-top')) return;
+    try {
+        // Check if button already exists
+        if (document.querySelector('.back-to-top')) return;
+        
+        // Ensure body exists
+        if (!document.body) return;
 
-    const backToTopBtn = document.createElement('button');
-    backToTopBtn.className = 'back-to-top';
-    backToTopBtn.innerHTML = '↑';
-    backToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        font-size: 1.2rem;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 1000;
-    `;
-    
-    document.body.appendChild(backToTopBtn);
-    
-    // Show/hide button based on scroll
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.visibility = 'visible';
-        } else {
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.visibility = 'hidden';
-        }
-    });
-    
-    // Scroll to top on click
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        const backToTopBtn = document.createElement('button');
+        backToTopBtn.className = 'back-to-top';
+        backToTopBtn.innerHTML = '↑';
+        backToTopBtn.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        `;
+        
+        document.body.appendChild(backToTopBtn);
+        
+        // Show/hide button based on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = '1';
+                backToTopBtn.style.visibility = 'visible';
+            } else {
+                backToTopBtn.style.opacity = '0';
+                backToTopBtn.style.visibility = 'hidden';
+            }
         });
-    });
+        
+        // Scroll to top on click
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    } catch (error) {
+        console.error('Error setting up back to top button:', error);
+    }
 }
 
 
