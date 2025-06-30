@@ -1,34 +1,52 @@
-// Enhanced Dark Mode Toggle Functionality untuk External Script
+// Enhanced Dark Mode Toggle Functionality dengan Multiple Initialization
 (function() {
     'use strict';
     
+    let isInitialized = false;
+    
     function initDarkModeExternal() {
+        // Prevent multiple initialization
+        if (isInitialized) return;
+        
+        console.log('🌙 Initializing Dark Mode Toggle...');
+        
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const body = document.body;
         
         if (!themeToggleBtn) {
-            console.warn('Theme toggle button not found in external script');
-            return;
+            console.warn('❌ Theme toggle button not found, retrying...');
+            return false;
         }
+        
+        console.log('✅ Theme toggle button found!');
+        isInitialized = true;
         
         // Check for saved theme preference or default to 'light'
         const currentTheme = localStorage.getItem('theme') || 'light';
         body.setAttribute('data-theme', currentTheme);
+        console.log('🎨 Current theme:', currentTheme);
         
         // Update toggle button state
         updateToggleButton(currentTheme);
         
-        // Theme toggle event listener
-        themeToggleBtn.addEventListener('click', function(e) {
+        // Theme toggle event listener with multiple event types
+        function handleThemeToggle(e) {
             e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('🔄 Theme toggle clicked!');
+            
             const currentTheme = body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            console.log('🔄 Switching from', currentTheme, 'to', newTheme);
             
             // Apply new theme
             body.setAttribute('data-theme', newTheme);
             
             try {
                 localStorage.setItem('theme', newTheme);
+                console.log('💾 Theme saved to localStorage');
             } catch (error) {
                 console.warn('Could not save theme preference:', error);
             }
@@ -41,18 +59,46 @@
             setTimeout(function() {
                 themeToggleBtn.style.transform = 'scale(1)';
             }, 150);
-        });
+        }
+        
+        // Add multiple event listeners for better compatibility
+        themeToggleBtn.addEventListener('click', handleThemeToggle);
+        themeToggleBtn.addEventListener('touchstart', handleThemeToggle);
+        
+        // Also add event listener to parent container
+        const themeToggleContainer = document.querySelector('.theme-toggle');
+        if (themeToggleContainer) {
+            themeToggleContainer.addEventListener('click', function(e) {
+                if (e.target.closest('.theme-toggle-btn')) {
+                    handleThemeToggle(e);
+                }
+            });
+        }
         
         function updateToggleButton(theme) {
             const sunIcon = document.querySelector('.sun-icon');
             const moonIcon = document.querySelector('.moon-icon');
             
+            console.log('🔄 Updating button icons for theme:', theme);
+            
             if (theme === 'dark') {
-                if (sunIcon) sunIcon.style.display = 'inline';
-                if (moonIcon) moonIcon.style.display = 'none';
+                if (sunIcon) {
+                    sunIcon.style.display = 'inline';
+                    console.log('☀️ Sun icon shown');
+                }
+                if (moonIcon) {
+                    moonIcon.style.display = 'none';
+                    console.log('🌙 Moon icon hidden');
+                }
             } else {
-                if (sunIcon) sunIcon.style.display = 'none';
-                if (moonIcon) moonIcon.style.display = 'inline';
+                if (sunIcon) {
+                    sunIcon.style.display = 'none';
+                    console.log('☀️ Sun icon hidden');
+                }
+                if (moonIcon) {
+                    moonIcon.style.display = 'inline';
+                    console.log('🌙 Moon icon shown');
+                }
             }
         }
         
@@ -63,6 +109,7 @@
                 const systemTheme = mediaQuery.matches ? 'dark' : 'light';
                 body.setAttribute('data-theme', systemTheme);
                 updateToggleButton(systemTheme);
+                console.log('🖥️ System theme detected:', systemTheme);
                 
                 // Listen for system theme changes
                 mediaQuery.addEventListener('change', function(e) {
@@ -70,23 +117,51 @@
                         const newTheme = e.matches ? 'dark' : 'light';
                         body.setAttribute('data-theme', newTheme);
                         updateToggleButton(newTheme);
+                        console.log('🖥️ System theme changed to:', newTheme);
                     }
                 });
             } catch (error) {
                 console.warn('Could not detect system theme:', error);
             }
         }
+        
+        console.log('✅ Dark Mode Toggle initialized successfully!');
+        return true;
     }
     
-    // Initialize when DOM is ready
+    // Multiple initialization strategies
+    function tryInitialization() {
+        if (initDarkModeExternal()) {
+            return; // Success, stop trying
+        }
+        
+        // Retry after a short delay
+        setTimeout(tryInitialization, 100);
+    }
+    
+    // Strategy 1: DOM Content Loaded
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initDarkModeExternal);
+        document.addEventListener('DOMContentLoaded', tryInitialization);
     } else {
-        initDarkModeExternal();
+        tryInitialization();
     }
     
-    // Fallback initialization
-    setTimeout(initDarkModeExternal, 500);
+    // Strategy 2: Window Load (fallback)
+    window.addEventListener('load', tryInitialization);
+    
+    // Strategy 3: Immediate execution (if DOM is already ready)
+    setTimeout(tryInitialization, 100);
+    
+    // Strategy 4: Delayed fallback
+    setTimeout(tryInitialization, 1000);
+    
+    // Strategy 5: Manual trigger function (for debugging)
+    window.initDarkMode = function() {
+        isInitialized = false;
+        return initDarkModeExternal();
+    };
+    
+    console.log('🚀 Dark Mode script loaded. Use window.initDarkMode() to manually trigger.');
 })();
 
 // Reading Time Calculator
