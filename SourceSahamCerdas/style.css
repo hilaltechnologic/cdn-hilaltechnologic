@@ -111,16 +111,112 @@ a {
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-/* Reset & Base Styles */
-* {
-    margin: 0;
-    padding: 0;
+/* Reset & Base Styles - Blogger Compatible */
+.header, .main-content, .sidebar, .footer,
+.post, .widget, .nav-menu, .theme-toggle {
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Override Blogger default styles */
+.Blog .blog-posts .post {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.Blog .blog-posts .post-title {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.Blog .blog-posts .post-body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Additional Blogger overrides */
+.Blog .blog-posts {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.blog-posts .post-outer {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.post-outer .post {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* Override default Blogger widget styles */
+.sidebar .widget {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.widget .widget-content {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Override header widget */
+.Header h1 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: inherit !important;
+    color: inherit !important;
+}
+
+.Header .description {
+    display: none !important;
+}
+
+/* Fix layout issues */
+.main-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.content-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+/* Ensure our custom layout takes precedence */
+.main-content {
+    display: grid !important;
+    grid-template-columns: 2fr 1fr !important;
+    gap: 2rem !important;
+    max-width: 1200px !important;
+    margin: 2rem auto !important;
+    padding: 0 1rem !important;
+}
+
+.posts-wrapper {
+    grid-column: 1 !important;
+}
+
+.sidebar {
+    grid-column: 2 !important;
 }
 
 /* Header Styles */
