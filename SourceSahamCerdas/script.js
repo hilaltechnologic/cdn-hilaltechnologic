@@ -448,5 +448,262 @@ function setupBackToTop() {
 }
 
 
+// Quick Search Toggle Functionality
+function toggleQuickSearch() {
+    const quickSearchBar = document.getElementById('quickSearchBar');
+    const searchToggleBtn = document.querySelector('.search-toggle-btn');
+    
+    if (quickSearchBar) {
+        quickSearchBar.classList.toggle('active');
+        
+        // Focus on input when opened
+        if (quickSearchBar.classList.contains('active')) {
+            const searchInput = quickSearchBar.querySelector('.quick-search-input');
+            if (searchInput) {
+                setTimeout(() => searchInput.focus(), 300);
+            }
+        }
+    }
+}
+
+// Enhanced Navigation Active State
+function setActiveNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    const currentPath = window.location.pathname;
+    
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        
+        const href = item.getAttribute('href');
+        if (href === currentPath || 
+            (currentPath === '/' && href === '/') ||
+            (currentPath.includes('/search/label/') && href.includes('/search/label/')) ||
+            (currentPath.includes('/p/') && href.includes('/p/'))) {
+            item.classList.add('active');
+        }
+    });
+}
+
+// Enhanced Search Functionality with Suggestions
+function setupEnhancedSearch() {
+    const quickSearchInput = document.querySelector('.quick-search-input');
+    const searchInput = document.querySelector('.search-input');
+    
+    // Quick search functionality
+    if (quickSearchInput) {
+        quickSearchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            if (query.length > 2) {
+                // Here you could implement search suggestions
+                console.log('Quick searching for:', query);
+                // Add search suggestions logic here
+            }
+        });
+        
+        // Handle Enter key
+        quickSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const form = this.closest('form');
+                if (form) {
+                    form.submit();
+                }
+            }
+        });
+    }
+    
+    // Enhanced sidebar search
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            if (query.length > 2) {
+                console.log('Sidebar searching for:', query);
+                // Add search suggestions logic here
+            }
+        });
+    }
+}
+
+// Smooth Scroll for Navigation Links
+function setupSmoothNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Add smooth transition effect
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+}
+
+// Enhanced Header Scroll Effects
+function setupEnhancedHeader() {
+    const header = document.querySelector('.header');
+    let lastScrollTop = 0;
+    let isScrolling = false;
+    
+    window.addEventListener('scroll', function() {
+        if (!isScrolling) {
+            window.requestAnimationFrame(function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Enhanced header shadow on scroll
+                if (scrollTop > 10) {
+                    header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+                    header.style.backdropFilter = 'blur(10px)';
+                } else {
+                    header.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                    header.style.backdropFilter = 'none';
+                }
+                
+                // Auto-hide header on scroll down (optional)
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+                isScrolling = false;
+            });
+        }
+        isScrolling = true;
+    });
+}
+
+// Enhanced Post Animations
+function setupPostAnimations() {
+    const posts = document.querySelectorAll('.post');
+    
+    // Intersection Observer for post animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const postObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    posts.forEach(post => {
+        post.style.opacity = '0';
+        post.style.transform = 'translateY(20px)';
+        post.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        postObserver.observe(post);
+    });
+}
+
+// Keyboard Shortcuts
+function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + K to open quick search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            toggleQuickSearch();
+        }
+        
+        // Escape to close quick search
+        if (e.key === 'Escape') {
+            const quickSearchBar = document.getElementById('quickSearchBar');
+            if (quickSearchBar && quickSearchBar.classList.contains('active')) {
+                toggleQuickSearch();
+            }
+        }
+    });
+}
+
+// Enhanced Notification System
+function showEnhancedNotification(message, type = 'info', duration = 3000) {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    
+    // Add icon based on type
+    const icons = {
+        info: 'ℹ️',
+        success: '✅',
+        warning: '⚠️',
+        error: '❌'
+    };
+    
+    notification.innerHTML = `
+        <span class="notification-icon">${icons[type] || icons.info}</span>
+        <span class="notification-message">${message}</span>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    `;
+    
+    // Set background color based on type
+    const colors = {
+        info: '#1a73e8',
+        success: '#34a853',
+        warning: '#fbbc04',
+        error: '#ea4335'
+    };
+    notification.style.backgroundColor = colors[type] || colors.info;
+    
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Hide notification
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, duration);
+}
+
+// Initialize Enhanced Features
+function initializeEnhancedFeatures() {
+    setActiveNavigation();
+    setupEnhancedSearch();
+    setupSmoothNavigation();
+    setupEnhancedHeader();
+    setupPostAnimations();
+    setupKeyboardShortcuts();
+    
+    // Add search toggle event listener
+    const searchToggleBtn = document.querySelector('.search-toggle-btn');
+    if (searchToggleBtn) {
+        searchToggleBtn.addEventListener('click', toggleQuickSearch);
+    }
+    
+    // Show welcome notification
+    setTimeout(() => {
+        showEnhancedNotification('Selamat datang di Saham Cerdas! 📈', 'success', 4000);
+    }, 1000);
+}
+
 // Console welcome message
 console.log('%c🚀 Template Saham Cerdas berhasil dimuat!', 'color: #1a73e8; font-size: 16px; font-weight: bold;');
+console.log('%c✨ UI/UX Enhancement aktif!', 'color: #34a853; font-size: 14px; font-weight: bold;');
+console.log('%c⌨️ Keyboard shortcuts: Ctrl/Cmd + K (Quick Search), Esc (Close)', 'color: #5f6368; font-size: 12px;');
