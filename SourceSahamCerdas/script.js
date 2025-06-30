@@ -1,4 +1,4 @@
-// Enhanced Dark Mode Toggle Functionality dengan Multiple Initialization
+// Enhanced Dark Mode Toggle Functionality - Fixed Version
 (function() {
     'use strict';
     
@@ -6,7 +6,7 @@
     
     function initDarkModeExternal() {
         // Prevent multiple initialization
-        if (isInitialized) return;
+        if (isInitialized) return true;
         
         console.log('🌙 Initializing Dark Mode Toggle...');
         
@@ -26,22 +26,22 @@
         body.setAttribute('data-theme', currentTheme);
         console.log('🎨 Current theme:', currentTheme);
         
-        // Update toggle button state
+        // Update toggle button state immediately
         updateToggleButton(currentTheme);
         
-        // Theme toggle event listener with multiple event types
+        // Theme toggle event listener
         function handleThemeToggle(e) {
             e.preventDefault();
             e.stopPropagation();
             
             console.log('🔄 Theme toggle clicked!');
             
-            const currentTheme = body.getAttribute('data-theme');
+            const currentTheme = body.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             console.log('🔄 Switching from', currentTheme, 'to', newTheme);
             
-            // Apply new theme
+            // Apply new theme immediately
             body.setAttribute('data-theme', newTheme);
             
             try {
@@ -51,7 +51,7 @@
                 console.warn('Could not save theme preference:', error);
             }
             
-            // Update button state
+            // Update button state immediately
             updateToggleButton(newTheme);
             
             // Add animation effect
@@ -59,20 +59,25 @@
             setTimeout(function() {
                 themeToggleBtn.style.transform = 'scale(1)';
             }, 150);
+            
+            console.log('✅ Theme switched successfully to:', newTheme);
         }
         
-        // Add multiple event listeners for better compatibility
-        themeToggleBtn.addEventListener('click', handleThemeToggle);
-        themeToggleBtn.addEventListener('touchstart', handleThemeToggle);
+        // Remove any existing event listeners first
+        themeToggleBtn.removeEventListener('click', handleThemeToggle);
         
-        // Also add event listener to parent container
-        const themeToggleContainer = document.querySelector('.theme-toggle');
-        if (themeToggleContainer) {
-            themeToggleContainer.addEventListener('click', function(e) {
-                if (e.target.closest('.theme-toggle-btn')) {
-                    handleThemeToggle(e);
-                }
-            });
+        // Add event listener
+        themeToggleBtn.addEventListener('click', handleThemeToggle, true);
+        
+        // Also add to icons directly
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        
+        if (sunIcon) {
+            sunIcon.addEventListener('click', handleThemeToggle, true);
+        }
+        if (moonIcon) {
+            moonIcon.addEventListener('click', handleThemeToggle, true);
         }
         
         function updateToggleButton(theme) {
@@ -84,19 +89,23 @@
             if (theme === 'dark') {
                 if (sunIcon) {
                     sunIcon.style.display = 'inline';
+                    sunIcon.style.visibility = 'visible';
                     console.log('☀️ Sun icon shown');
                 }
                 if (moonIcon) {
                     moonIcon.style.display = 'none';
+                    moonIcon.style.visibility = 'hidden';
                     console.log('🌙 Moon icon hidden');
                 }
             } else {
                 if (sunIcon) {
                     sunIcon.style.display = 'none';
+                    sunIcon.style.visibility = 'hidden';
                     console.log('☀️ Sun icon hidden');
                 }
                 if (moonIcon) {
                     moonIcon.style.display = 'inline';
+                    moonIcon.style.visibility = 'visible';
                     console.log('🌙 Moon icon shown');
                 }
             }
@@ -136,7 +145,7 @@
         }
         
         // Retry after a short delay
-        setTimeout(tryInitialization, 100);
+        setTimeout(tryInitialization, 200);
     }
     
     // Strategy 1: DOM Content Loaded
@@ -159,6 +168,14 @@
     window.initDarkMode = function() {
         isInitialized = false;
         return initDarkModeExternal();
+    };
+    
+    // Strategy 6: Force initialization function
+    window.forceDarkModeInit = function() {
+        isInitialized = false;
+        const result = initDarkModeExternal();
+        console.log('Force init result:', result);
+        return result;
     };
     
     console.log('🚀 Dark Mode script loaded. Use window.initDarkMode() to manually trigger.');
