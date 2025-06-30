@@ -1,285 +1,102 @@
-// Enhanced Dark Mode Toggle Functionality - Fixed Version
-(function() {
-    'use strict';
-    
-    let isInitialized = false;
-    
-    function initDarkModeExternal() {
-        // Prevent multiple initialization
-        if (isInitialized) return true;
-        
-        console.log('🌙 Initializing Dark Mode Toggle...');
-        
-        const themeToggleBtn = document.getElementById('theme-toggle-btn');
-        const body = document.body;
-        
-        if (!themeToggleBtn) {
-            console.warn('❌ Theme toggle button not found, retrying...');
-            return false;
-        }
-        
-        console.log('✅ Theme toggle button found!');
-        isInitialized = true;
-        
-        // Check for saved theme preference or default to 'light'
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        body.setAttribute('data-theme', currentTheme);
-        console.log('🎨 Current theme:', currentTheme);
-        
-        // Update toggle button state immediately
-        updateToggleButton(currentTheme);
-        
-        // Theme toggle event listener
-        function handleThemeToggle(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('🔄 Theme toggle clicked!');
-            
-            const currentTheme = body.getAttribute('data-theme') || 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            console.log('🔄 Switching from', currentTheme, 'to', newTheme);
-            
-            // Apply new theme immediately
-            body.setAttribute('data-theme', newTheme);
-            
-            try {
-                localStorage.setItem('theme', newTheme);
-                console.log('💾 Theme saved to localStorage');
-            } catch (error) {
-                console.warn('Could not save theme preference:', error);
-            }
-            
-            // Update button state immediately
-            updateToggleButton(newTheme);
-            
-            // Add animation effect
-            themeToggleBtn.style.transform = 'scale(0.9)';
-            setTimeout(function() {
-                themeToggleBtn.style.transform = 'scale(1)';
-            }, 150);
-            
-            console.log('✅ Theme switched successfully to:', newTheme);
-        }
-        
-        // Remove any existing event listeners first
-        themeToggleBtn.removeEventListener('click', handleThemeToggle);
-        
-        // Add event listener
-        themeToggleBtn.addEventListener('click', handleThemeToggle, true);
-        
-        // Also add to icons directly
-        const sunIcon = document.querySelector('.sun-icon');
-        const moonIcon = document.querySelector('.moon-icon');
-        
-        if (sunIcon) {
-            sunIcon.addEventListener('click', handleThemeToggle, true);
-        }
-        if (moonIcon) {
-            moonIcon.addEventListener('click', handleThemeToggle, true);
-        }
-        
-        function updateToggleButton(theme) {
-            const sunIcon = document.querySelector('.sun-icon');
-            const moonIcon = document.querySelector('.moon-icon');
-            
-            console.log('🔄 Updating button icons for theme:', theme);
-            
-            if (theme === 'dark') {
-                if (sunIcon) {
-                    sunIcon.style.display = 'inline';
-                    sunIcon.style.visibility = 'visible';
-                    console.log('☀️ Sun icon shown');
-                }
-                if (moonIcon) {
-                    moonIcon.style.display = 'none';
-                    moonIcon.style.visibility = 'hidden';
-                    console.log('🌙 Moon icon hidden');
-                }
-            } else {
-                if (sunIcon) {
-                    sunIcon.style.display = 'none';
-                    sunIcon.style.visibility = 'hidden';
-                    console.log('☀️ Sun icon hidden');
-                }
-                if (moonIcon) {
-                    moonIcon.style.display = 'inline';
-                    moonIcon.style.visibility = 'visible';
-                    console.log('🌙 Moon icon shown');
-                }
-            }
-        }
-        
-        // Auto-detect system theme preference
-        if (window.matchMedia && !localStorage.getItem('theme')) {
-            try {
-                const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-                const systemTheme = mediaQuery.matches ? 'dark' : 'light';
-                body.setAttribute('data-theme', systemTheme);
-                updateToggleButton(systemTheme);
-                console.log('🖥️ System theme detected:', systemTheme);
-                
-                // Listen for system theme changes
-                mediaQuery.addEventListener('change', function(e) {
-                    if (!localStorage.getItem('theme')) {
-                        const newTheme = e.matches ? 'dark' : 'light';
-                        body.setAttribute('data-theme', newTheme);
-                        updateToggleButton(newTheme);
-                        console.log('🖥️ System theme changed to:', newTheme);
-                    }
-                });
-            } catch (error) {
-                console.warn('Could not detect system theme:', error);
-            }
-        }
-        
-        console.log('✅ Dark Mode Toggle initialized successfully!');
-        return true;
-    }
-    
-    // Multiple initialization strategies
-    function tryInitialization() {
-        if (initDarkModeExternal()) {
-            return; // Success, stop trying
-        }
-        
-        // Retry after a short delay
-        setTimeout(tryInitialization, 200);
-    }
-    
-    // Strategy 1: DOM Content Loaded
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', tryInitialization);
-    } else {
-        tryInitialization();
-    }
-    
-    // Strategy 2: Window Load (fallback)
-    window.addEventListener('load', tryInitialization);
-    
-    // Strategy 3: Immediate execution (if DOM is already ready)
-    setTimeout(tryInitialization, 100);
-    
-    // Strategy 4: Delayed fallback
-    setTimeout(tryInitialization, 1000);
-    
-    // Strategy 5: Manual trigger function (for debugging)
-    window.initDarkMode = function() {
-        isInitialized = false;
-        return initDarkModeExternal();
-    };
-    
-    // Strategy 6: Force initialization function
-    window.forceDarkModeInit = function() {
-        isInitialized = false;
-        const result = initDarkModeExternal();
-        console.log('Force init result:', result);
-        return result;
-    };
-    
-    console.log('🚀 Dark Mode script loaded. Use window.initDarkMode() to manually trigger.');
-})();
+/* Template Saham Cerdas - JavaScript */
 
-// Reading Time Calculator
+// DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function() {
-    const postContent = document.querySelector('.post-content');
-    const readingTimeElement = document.getElementById('reading-time-value');
-    
-    if (postContent && readingTimeElement) {
-        const text = postContent.textContent || postContent.innerText;
-        const wordsPerMinute = 200; // Average reading speed
-        const wordCount = text.trim().split(/\s+/).length;
-        const readingTime = Math.ceil(wordCount / wordsPerMinute);
-        
-        readingTimeElement.textContent = readingTime;
-    }
+    initializeTemplate();
 });
 
-// Lazy Loading Images
-document.addEventListener('DOMContentLoaded', function() {
-    const lazyImages = document.querySelectorAll('img.lazy');
-    
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.remove('lazy');
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-        
-        lazyImages.forEach(function(img) {
-            imageObserver.observe(img);
-        });
-    } else {
-        // Fallback for browsers without IntersectionObserver
-        lazyImages.forEach(function(img) {
-            img.src = img.dataset.src;
-            img.classList.remove('lazy');
-        });
-    }
-});
-
-// Back to Top Button
-document.addEventListener('DOMContentLoaded', function() {
-    // Create back to top button
-    const backToTopBtn = document.createElement('button');
-    backToTopBtn.innerHTML = '↑';
-    backToTopBtn.className = 'back-to-top';
-    backToTopBtn.setAttribute('aria-label', 'Back to top');
-    
-    // Set styles individually to avoid cssText issues
-    backToTopBtn.style.position = 'fixed';
-    backToTopBtn.style.bottom = '20px';
-    backToTopBtn.style.right = '20px';
-    backToTopBtn.style.width = '50px';
-    backToTopBtn.style.height = '50px';
-    backToTopBtn.style.borderRadius = '50%';
-    backToTopBtn.style.background = '#1a73e8';
-    backToTopBtn.style.color = 'white';
-    backToTopBtn.style.border = 'none';
-    backToTopBtn.style.fontSize = '20px';
-    backToTopBtn.style.cursor = 'pointer';
-    backToTopBtn.style.opacity = '0';
-    backToTopBtn.style.visibility = 'hidden';
-    backToTopBtn.style.transition = 'all 0.3s ease';
-    backToTopBtn.style.zIndex = '1000';
-    
-    // Safely append to body
+// Initialize Template Functions
+function initializeTemplate() {
+    // Ensure body is available before setting up features
     if (document.body) {
-        document.body.appendChild(backToTopBtn);
+        setupMobileMenu();
+        setupSearchEnhancements();
+        setupScrollEffects();
+        setupLazyLoading();
+        setupSmoothScrolling();
+        setupStockPriceSimulation();
+        setupBackToTop();
+        setupReadingProgress();
+        
+        // Initialize reading progress on blog post pages
+        if (document.querySelector('.post-content')) {
+            setupReadingProgress();
+        }
+    } else {
+        // If body is not available, wait for it
+        window.addEventListener('load', initializeTemplate);
+    }
+}
+
+// Mobile Menu Toggle
+function setupMobileMenu() {
+    const header = document.querySelector('.header');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    // Create mobile menu button
+    const mobileMenuBtn = document.createElement('button');
+    mobileMenuBtn.className = 'mobile-menu-btn';
+    mobileMenuBtn.innerHTML = '☰';
+    mobileMenuBtn.style.cssText = `
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+    `;
+    
+    // Insert mobile menu button
+    const headerContent = document.querySelector('.header-content');
+    if (headerContent && navMenu) {
+        headerContent.appendChild(mobileMenuBtn);
+        
+        // Toggle mobile menu
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('mobile-active');
+        });
     }
     
-    // Show/hide button based on scroll position
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.visibility = 'visible';
-        } else {
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.visibility = 'hidden';
+    // Mobile menu styles
+    const mobileStyles = document.createElement('style');
+    mobileStyles.textContent = `
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block !important;
+            }
+            
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-color);
+                flex-direction: column;
+                padding: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-menu.mobile-active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
         }
-    });
-    
-    // Smooth scroll to top
-    backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-});
+    `;
+    document.head.appendChild(mobileStyles);
+}
 
 // Enhanced Search Functionality
-document.addEventListener('DOMContentLoaded', function() {
+function setupSearchEnhancements() {
     const searchInput = document.querySelector('.search-input');
+    const searchForm = document.querySelector('.search-form');
     
     if (searchInput) {
-        // Add search suggestions (basic implementation)
+        // Add search suggestions (placeholder functionality)
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase();
             if (query.length > 2) {
@@ -289,36 +106,347 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Enhanced search form submission
-        const searchForm = document.querySelector('.search-form');
         if (searchForm) {
             searchForm.addEventListener('submit', function(e) {
                 const query = searchInput.value.trim();
                 if (!query) {
                     e.preventDefault();
                     searchInput.focus();
+                    showNotification('Masukkan kata kunci pencarian', 'warning');
                 }
             });
         }
     }
-});
+}
 
-// Mobile Menu Enhancement (for future mobile menu implementation)
-document.addEventListener('DOMContentLoaded', function() {
-    const navMenu = document.querySelector('.nav-menu');
+// Scroll Effects
+function setupScrollEffects() {
+    const header = document.querySelector('.header');
+    let lastScrollTop = 0;
     
-    if (navMenu && window.innerWidth <= 768) {
-        // Add mobile menu functionality here
-        console.log('Mobile menu ready for implementation');
-    }
-});
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Header shadow on scroll
+        if (scrollTop > 10) {
+            header.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        } else {
+            header.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+        }
+        
+        // Hide/show header on scroll (optional)
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            header.style.transform = 'translateY(-100%)';
+        } else {
+            header.style.transform = 'translateY(0)';
+        }
+        
+        lastScrollTop = scrollTop;
+    });
+    
+    // Add transition to header
+    header.style.transition = 'all 0.3s ease';
+}
 
-// Performance Monitoring
-document.addEventListener('DOMContentLoaded', function() {
-    // Log page load performance
-    window.addEventListener('load', function() {
-        if ('performance' in window) {
-            const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-            console.log('Page load time:', loadTime + 'ms');
+// Lazy Loading for Images
+function setupLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// Smooth Scrolling
+function setupSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Stock Price Simulation (Demo Feature)
+function setupStockPriceSimulation() {
+    // Create stock ticker widget
+    const stockWidget = createStockWidget();
+    const sidebar = document.querySelector('.sidebar');
+    
+    if (sidebar && stockWidget) {
+        sidebar.insertBefore(stockWidget, sidebar.firstChild);
+    }
+}
+
+// Create Stock Widget
+function createStockWidget() {
+    const widget = document.createElement('div');
+    widget.className = 'widget stock-widget';
+    
+    const stockData = [
+        { symbol: 'BBCA', name: 'Bank Central Asia', price: 8750, change: +125 },
+        { symbol: 'BBRI', name: 'Bank Rakyat Indonesia', price: 4580, change: -45 },
+        { symbol: 'BMRI', name: 'Bank Mandiri', price: 9200, change: +75 },
+        { symbol: 'TLKM', name: 'Telkom Indonesia', price: 3850, change: +25 }
+    ];
+    
+    widget.innerHTML = `
+        <h3 class="widget-title">📈 Harga Saham Terkini</h3>
+        <div class="stock-list">
+            ${stockData.map(stock => `
+                <div class="stock-item">
+                    <div class="stock-info">
+                        <div class="stock-symbol">${stock.symbol}</div>
+                        <div class="stock-name">${stock.name}</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">Rp ${stock.price.toLocaleString()}</div>
+                        <div class="change ${stock.change >= 0 ? 'positive' : 'negative'}">
+                            ${stock.change >= 0 ? '+' : ''}${stock.change}
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+        <div class="stock-disclaimer">
+            <small>*Data simulasi untuk demo</small>
+        </div>
+    `;
+    
+    // Add stock widget styles
+    const stockStyles = document.createElement('style');
+    stockStyles.textContent = `
+        .stock-widget .stock-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .stock-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .stock-symbol {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .stock-name {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .stock-price {
+            text-align: right;
+        }
+        
+        .price {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .change {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .change.positive {
+            color: var(--secondary-color);
+        }
+        
+        .change.negative {
+            color: var(--danger-color);
+        }
+        
+        .stock-disclaimer {
+            margin-top: 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+    `;
+    document.head.appendChild(stockStyles);
+    
+    // Simulate price updates
+    setInterval(() => {
+        updateStockPrices(widget);
+    }, 10000); // Update every 10 seconds
+    
+    return widget;
+}
+
+// Update Stock Prices
+function updateStockPrices(widget) {
+    const stockItems = widget.querySelectorAll('.stock-item');
+    
+    stockItems.forEach(item => {
+        const priceElement = item.querySelector('.price');
+        const changeElement = item.querySelector('.change');
+        
+        if (priceElement && changeElement) {
+            // Simulate price change
+            const currentPrice = parseInt(priceElement.textContent.replace(/[^\d]/g, ''));
+            const changePercent = (Math.random() - 0.5) * 0.02; // ±1% change
+            const newChange = Math.round(currentPrice * changePercent);
+            const newPrice = currentPrice + newChange;
+            
+            // Update display
+            priceElement.textContent = `Rp ${newPrice.toLocaleString()}`;
+            changeElement.textContent = `${newChange >= 0 ? '+' : ''}${newChange}`;
+            changeElement.className = `change ${newChange >= 0 ? 'positive' : 'negative'}`;
+            
+            // Add flash effect
+            item.style.background = newChange >= 0 ? '#e8f5e8' : '#ffeaea';
+            setTimeout(() => {
+                item.style.background = '#f8f9fa';
+            }, 1000);
         }
     });
-});
+}
+
+// Notification System
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 6px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    `;
+    
+    // Set background color based on type
+    const colors = {
+        info: '#1a73e8',
+        success: '#34a853',
+        warning: '#fbbc04',
+        error: '#ea4335'
+    };
+    notification.style.backgroundColor = colors[type] || colors.info;
+    
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Hide notification
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+// Reading Progress Bar
+function setupReadingProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'reading-progress';
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: var(--accent-color);
+        z-index: 1001;
+        transition: width 0.1s ease;
+    `;
+    
+    document.body.appendChild(progressBar);
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        progressBar.style.width = Math.min(scrolled, 100) + '%';
+    });
+}
+
+// Back to Top Button
+function setupBackToTop() {
+    try {
+        // Check if button already exists
+        if (document.querySelector('.back-to-top')) return;
+        
+        // Ensure body exists
+        if (!document.body) return;
+
+        const backToTopBtn = document.createElement('button');
+        backToTopBtn.className = 'back-to-top';
+        backToTopBtn.innerHTML = '↑';
+        backToTopBtn.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        `;
+        
+        document.body.appendChild(backToTopBtn);
+        
+        // Show/hide button based on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = '1';
+                backToTopBtn.style.visibility = 'visible';
+            } else {
+                backToTopBtn.style.opacity = '0';
+                backToTopBtn.style.visibility = 'hidden';
+            }
+        });
+        
+        // Scroll to top on click
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    } catch (error) {
+        console.error('Error setting up back to top button:', error);
+    }
+}
+
+
+// Console welcome message
+console.log('%c🚀 Template Saham Cerdas berhasil dimuat!', 'color: #1a73e8; font-size: 16px; font-weight: bold;');
